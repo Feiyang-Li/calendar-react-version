@@ -1,4 +1,3 @@
-import "../shared/styles/button.css"
 import styles from "./MiniCalendar.module.css"
 import classNames from 'classnames';
 import { today, subtractMonths, addMonths, generateMonthCalendarDays, isTheSameDay } from "../shared/scripts/date.js"
