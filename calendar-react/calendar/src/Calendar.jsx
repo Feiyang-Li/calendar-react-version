@@ -34,9 +34,8 @@ export function Calendar() {
         side = <MultiSelect />;
     }
     return (
-        <>  
-        {side}
-
-        </>
+        <div className={'Calendar-app'}>
+            {side}
+        </div>
     )
 }
