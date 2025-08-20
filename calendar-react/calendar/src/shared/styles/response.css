@@ -1,0 +1,10 @@
+@media (min-width: 768px) {
+    .mobileOnly {
+        display: none !important;
+    }
+}
+@media (max-width: 767px) {
+    .desktopOnly {
+        display: none !important;
+    }
+}
