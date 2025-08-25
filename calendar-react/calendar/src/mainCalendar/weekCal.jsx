@@ -2,24 +2,33 @@ import styles from "./weekCal.module.css";
 import classNames from "classnames";
 import {generateWeekDays} from "../shared/scripts/date.js"
 import { useEffect, useState, useRef} from 'react'
-function DayOfWeek({date, week, idx}) {
+import {today, isTheSameDay} from "../shared/scripts/date.js"
+function DayOfWeek({date, idx}) {
     // return a buttom with 
     const rep = {0: "Sun", 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat"};
+    let itemClass = []
+    if (isTheSameDay(today(), date)) {
+      itemClass = [styles.weekCalendar__dayOfWeek__button, styles.weekCalendar__dayOfWeek__button__highlight];
+    } else {
+      itemClass = [styles.weekCalendar__dayOfWeek__button]
+    }
     return(
-      <li className={styles.weekCalendar__dayofWeek__item} key={idx}>
-          <button className={styles.weekCalendar__dayOfWeek__button}>
-              <span className={styles.weekCalendar__dayOfWeek__day}>{rep[week]}</span>
-              <span className={styles.weekCalendar__dayOfWeek__date}>{date}</span>
+      <li className={
+        classNames(styles.weekCalendar__dayofWeek__item)
+        } key={idx}>
+          <button className={classNames(...itemClass)}>
+              <span className={styles.weekCalendar__dayOfWeek__day}>{rep[date.getDay()]}</span>
+              <span className={styles.weekCalendar__dayOfWeek__date}>{date.getDate()}</span>
           </button>
       </li>
     )
 }
 
 function Cell() {
-  const r = useRef([]);
-  for(let i = 0; i <= 1380; i = i + 60){
-    r.current = r.current.concat(String(i));
-  }
+const r = useRef(
+  [...Array(1380 / 60 + 1)].map((_, i) => String(i * 60))
+);
+
   return (
     <div className={styles.weekCalendar__column} >
       {
@@ -43,7 +52,7 @@ export default function WeekCal({ storage, selectedDate, setSelectedDate }) {
       <div className={styles.weekCalendar}>
         <ul className={styles.weekCalendar__dayOfWeekList}>
             {dayOfWeeks.map((ele, idx) => (
-              <DayOfWeek date={ele.getDate()} week={ele.getDay()} idx={idx} />
+              <DayOfWeek date={ele} idx={idx} />
             ))}
 
         </ul>
