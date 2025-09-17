@@ -121,6 +121,9 @@
   gap: 0.5rem;
 }
 
+.Cal__dialog--middle::backdrop {
+  
+}
 @keyframes open-dialog {
   from {
     transform: scale(0.9);

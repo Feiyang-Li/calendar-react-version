@@ -7,6 +7,7 @@ import { MiniCalendar } from "../miniCalendar/MiniCalendar";
 import Dialog from "../shared/scripts/dialog.jsx"
 import {today} from "../shared/scripts/date.js"
 import DbConnectionDialog from "../store/DbConnectDialog.jsx"
+import SideBar from "../sideBar/SideBar.jsx";
 // import DbReconnection from "../store/DbConnection.js"
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   month: 'long',
@@ -14,7 +15,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: 'numeric'
 });
 
-export function Nav({selectedDate, setSelectedDate, view, setView}) {
+export function Nav({single, storage, selectedDate, setSelectedDate, view, setView}) {
     const dialogRef = useRef(null)
     const [mobileSideBarOpen, setMobileSideBarOpen] = useState(false);
     const [DbConnectDialogOpen, setDbConnectDialogOpen] = useState(false);
@@ -28,9 +29,10 @@ export function Nav({selectedDate, setSelectedDate, view, setView}) {
         setSelectedDate(today())
     }
     const mobileSideBarV2 = <Dialog open={mobileSideBarOpen} onClose={()=>setMobileSideBarOpen(false)} className={classNames('Cal__dialog', 'Cal__dialog--sidebar')}>
+
         <div className={"Cal__dialog__wrapper"}>
             <div className={"Cal__dialog__content"}>
-                <MiniCalendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} /> 
+                <SideBar single={single} storage={storage} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
             </div>
         </div>
     </Dialog>

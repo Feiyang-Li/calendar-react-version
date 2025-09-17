@@ -3,7 +3,7 @@ import styles from "./DbConnectDialog.module.css";
 import Dialog from "../shared/scripts/dialog";
 import classNames from 'classnames';
 
-export default function DbConnectionDialog({ open, onClose, onSave }) {
+export default function DbConnectionDialog({ selectedDate, startPoint, endPoint, open, onClose, onSave }) {
   const [formData, setFormData] = useState({
     user: "",
     host: "localhost",
@@ -82,8 +82,8 @@ export default function DbConnectionDialog({ open, onClose, onSave }) {
           </label>
 
           <div style={styles.dbDialog__ButtonContainer}>
-            <button type="submit" className={classNames("Cal__button", ".Cal__button--primary", styles.submitButton)}>Save</button>
-            <button type="button" onClick={onClose} className={classNames("Cal__button", ".Cal__button--primary", styles.closeButton)}>Cancel</button>
+            <button type="submit" className={classNames("Cal__button", "Cal__button--primary", styles.submitButton)}>Save</button>
+            <button type="button" onClick={onClose} className={classNames("Cal__button", ".Cal__button--secondary", styles.closeButton)}>Cancel</button>
           </div>
         </form>
       </div>

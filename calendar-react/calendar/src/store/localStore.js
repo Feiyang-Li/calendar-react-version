@@ -57,6 +57,14 @@ export class LocalStorage {
       entries.every(([k, v]) => rec[k] === v)
     );
   }
+  extractByDate(field, value, { mode = "day" } = {}) {
+    if (!(field in this.schema)) throw new Error(`Unknown field "${field}"`);
+    if (this.schema[field] !== Date)
+      throw new Error(`Field "${field}" is not declared as Date in schema`);
+
+    const records = this._loadRecords();
+    return records.filter(rec => this._datesEqual(rec[field], value, mode));
+  }
   _saveRecords(records) {
     localStorage.setItem(this.recordsKey, JSON.stringify(records));
   }
@@ -151,6 +159,20 @@ export class LocalStorage {
   }
   _isISODateString(v) {
     return typeof v === "string" && !Number.isNaN(Date.parse(v));
+  }
+  _toISO(v) {
+    if (v instanceof Date) return v.toISOString();
+    if (typeof v === "string" && !Number.isNaN(Date.parse(v))) {
+      return new Date(v).toISOString();
+    }
+    return null;
+  }
+  _datesEqual(a, b, mode = "exact") {
+    const ia = this._toISO(a);
+    const ib = this._toISO(b);
+    if (!ia || !ib) return false;
+    if (mode === "day") return ia.slice(0, 10) === ib.slice(0, 10); // YYYY-MM-DD
+    return ia === ib;
   }
 }
 
